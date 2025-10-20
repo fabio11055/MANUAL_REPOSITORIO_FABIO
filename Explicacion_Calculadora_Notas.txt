@@ -1,0 +1,80 @@
+🧱 1. Archivo: index.html
+Este archivo contiene la estructura principal del sitio web (la parte visible en el navegador).
+Es una calculadora de notas finales, donde el usuario introduce sus calificaciones y el sistema muestra los resultados.
+
+Estructura general:
+- Encabezado (<head>):
+  - Define el idioma (lang="es").
+  - Configura el conjunto de caracteres (UTF-8) y la vista adaptable a móviles.
+  - Título del sitio: “Calculadora de Notas”.
+  - Enlace al archivo de estilos style.css.
+
+- Cuerpo (<body>):
+  - Contenedor principal (.container):
+    - Título principal: “Calculadora de Calificación Final”.
+    - Subtítulo: indica que los cortes valen 33%, 33% y 34%.
+  - Tarjeta de entrada (.card):
+    - Contiene dos campos numéricos:
+      - Nota del primer corte (33%)
+      - Nota del segundo corte (33%)
+    - Botón “Calcular” (class="btn-calcular").
+  - Sección de resultados (#resultados) (inicialmente oculta):
+    - Muestra:
+      1. Nota actual (promedio ponderado de los dos primeros cortes)
+      2. Nota necesaria en el tercer corte para aprobar (3.0)
+      3. Nota final proyectada
+    - Muestra un mensaje dinámico según el resultado.
+  - Enlace al script script.js.
+
+🎨 2. Archivo: style.css
+Define el diseño visual del sitio (colores, tamaños, tipografías, distribución, animaciones).
+
+Características principales:
+- Tipografía moderna (Segoe UI)
+- Fondo con degradado rosado y dorado.
+- Centrado vertical y horizontal del contenido.
+- Contenedor principal (.container): ancho máximo 600 px.
+- Títulos y subtítulos: texto blanco con sombra suave.
+- Tarjetas (.card, .resultados): fondo blanco, bordes redondeados y sombra.
+- Campos de entrada: bordes suaves y color dinámico al enfocar.
+- Botón “Calcular”: degradado violeta-azul, animación de elevación al pasar el mouse.
+- Resultados (.resultado-item): cajas con fondo gris claro; el más importante con degradado de color.
+- Mensajes con tres tipos de estado:
+  - .exito → verde (aprobado)
+  - .advertencia → amarillo (nota necesaria)
+  - .imposible → rojo (no alcanza 3.0)
+- Diseño responsive para pantallas pequeñas.
+
+⚙️ 3. Archivo: script.js
+Contiene la lógica funcional de la calculadora.
+
+Variables principales:
+- PORCENTAJE_CORTE1 = 0.33
+- PORCENTAJE_CORTE2 = 0.33
+- PORCENTAJE_CORTE3 = 0.34
+- NOTA_MINIMA_APROBATORIA = 3.0
+- NOTA_MAXIMA = 5.0
+
+Funciones principales:
+- calcularNotas():
+  1. Lee las notas del usuario.
+  2. Valida que estén entre 0 y 5.
+  3. Calcula nota actual:
+     notaActual = (nota1 * 0.33) + (nota2 * 0.33)
+  4. Calcula nota necesaria:
+     notaNecesaria = (3.0 - notaActual) / 0.34
+  5. Proyecta la nota final y muestra resultados.
+  6. Llama a mostrarMensaje().
+- mostrarMensaje():
+  - Si ya aprueba: mensaje verde.
+  - Si aún puede aprobar: mensaje amarillo.
+  - Si es imposible: mensaje rojo.
+  - Si supera 3.0: mensaje verde.
+
+📄 En resumen:
+Este proyecto combina:
+- HTML → estructura
+- CSS → diseño moderno y responsive
+- JavaScript → cálculos y comportamiento interactivo
+
+El resultado es una calculadora web de notas finales limpia, funcional y visualmente atractiva.
