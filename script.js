@@ -27,6 +27,44 @@ corte2Input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') calcularNotas();
 });
 
+function crearEmoji(emoji, cantidad) {
+    for (let i = 0; i < cantidad; i++) {
+        setTimeout(() => {
+            const emojiElement = document.createElement('div');
+            emojiElement.className = 'emoji';
+            emojiElement.textContent = emoji;
+            emojiElement.style.left = Math.random() * 100 + 'vw';
+            emojiElement.style.animationDuration = (2 + Math.random() * 2) + 's';
+            document.body.appendChild(emojiElement);
+            
+            setTimeout(() => {
+                emojiElement.remove();
+            }, 3000);
+        }, i * 100);
+    }
+}
+
+function explotar() {
+    calcularBtn.classList.add('exploding');
+    crearEmoji('😢', 15);
+    crearEmoji('😭', 10);
+    crearEmoji('❌', 20);
+    
+    setTimeout(() => {
+        calcularBtn.classList.remove('exploding');
+    }, 600);
+}
+
+function celebrar() {
+    crearEmoji('❤️', 20);
+    crearEmoji('💚', 15);
+    crearEmoji('💙', 15);
+    crearEmoji('😊', 12);
+    crearEmoji('🎉', 10);
+    crearEmoji('⭐', 12);
+    crearEmoji('✨', 15);
+}
+
 function calcularNotas() {
     // Obtener valores de entrada
     const nota1 = parseFloat(corte1Input.value);
@@ -47,17 +85,24 @@ function calcularNotas() {
     const notaActual = (nota1 * PORCENTAJE_CORTE1) + (nota2 * PORCENTAJE_CORTE2);
     
     // Calcular nota necesaria en el tercer corte para obtener 3.0
-    // Formula: notaFinal = notaActual + (notaCorte3 * PORCENTAJE_CORTE3)
-    // Despejando: notaCorte3 = (notaFinal - notaActual) / PORCENTAJE_CORTE3
     const notaNecesaria = (NOTA_MINIMA_APROBATORIA - notaActual) / PORCENTAJE_CORTE3;
     
-    // Calcular nota final proyectada (si se obtiene la nota necesaria)
-    const notaFinalProyectada = notaActual + (notaNecesaria * PORCENTAJE_CORTE3);
+    // Calcular nota final proyectada
+    const notaFinalProyectada = notaActual + (Math.min(notaNecesaria, NOTA_MAXIMA) * PORCENTAJE_CORTE3);
     
     // Mostrar resultados
     notaActualSpan.textContent = notaActual.toFixed(2);
     notaNecesariaSpan.textContent = notaNecesaria.toFixed(2);
     notaFinalSpan.textContent = notaFinalProyectada.toFixed(2);
+    
+    // Animaciones según el resultado
+    if (notaNecesaria > NOTA_MAXIMA) {
+        explotar();
+    } else if (notaNecesaria <= NOTA_MAXIMA && notaNecesaria >= 0) {
+        celebrar();
+    } else {
+        celebrar();
+    }
     
     // Mostrar mensaje según el caso
     mostrarMensaje(notaNecesaria, notaActual);
